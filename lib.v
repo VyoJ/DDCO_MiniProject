@@ -51,31 +51,36 @@ module adder_16_bit(
 	fulladder_1_bit f15( .a( a[15] ), .b( b[15] ), .c_in( ripple14 ), .s( sum[15]), .c_out(c_out) );
 endmodule
 
+module full_subtractor(input a, b, b_in, output d, b_out);
+ assign d = a ^ b ^ b_in;
+ assign b_out = (~a & b) | (~(a ^ b) & b_in);
+endmodule
+
+
 module sub_16_bit(
 	input [15:0] a,
 	input [15:0] b,
-	output [15:0] sum,
-	output c_out
+	output [15:0] d,
+	output b_out
 );
-	wire c_in;
-	assign c_in = 1'b0;
-	assign inv_b = (~b + 1'b1);
-	fulladder_1_bit f0( .a( a[0] ), .b( inv_b[0] ), .c_in( c_in ), .s( sum[0]), .c_out( ripple0 ) );
-	fulladder_1_bit f1( .a( a[1] ), .b( inv_b[1] ), .c_in( ripple0 ), .s( sum[1]), .c_out(ripple1) );
-	fulladder_1_bit f2( .a( a[2] ), .b( inv_b[2] ), .c_in( ripple1 ), .s( sum[2]), .c_out(ripple2) );
-	fulladder_1_bit f3( .a( a[3] ), .b( inv_b[3] ), .c_in( ripple2 ), .s( sum[3]), .c_out(ripple3) );
-	fulladder_1_bit f4( .a( a[4] ), .b( inv_b[4] ), .c_in( ripple3 ), .s( sum[4]), .c_out(ripple4) );
-	fulladder_1_bit f5( .a( a[5] ), .b( inv_b[5] ), .c_in( ripple4 ), .s( sum[5]), .c_out(ripple5) );
-	fulladder_1_bit f6( .a( a[6] ), .b( inv_b[6] ), .c_in( ripple5 ), .s( sum[6]), .c_out(ripple6) );
-	fulladder_1_bit f7( .a( a[7] ), .b( inv_b[7] ), .c_in( ripple6 ), .s( sum[7]), .c_out(ripple7) );
-	fulladder_1_bit f8( .a( a[8] ), .b( inv_b[8] ), .c_in( ripple7 ), .s( sum[8]), .c_out(ripple8) );
-	fulladder_1_bit f9( .a( a[9] ), .b( inv_b[9] ), .c_in( ripple8 ), .s( sum[9]), .c_out(ripple9) );
-	fulladder_1_bit f10( .a( a[10] ), .b( inv_b[10] ), .c_in( ripple9 ), .s( sum[10]), .c_out(ripple10) );
-	fulladder_1_bit f11( .a( a[11] ), .b( inv_b[11] ), .c_in( ripple10 ), .s( sum[11]), .c_out(ripple11) );
-	fulladder_1_bit f12( .a( a[12] ), .b( inv_b[12] ), .c_in( ripple11 ), .s( sum[12]), .c_out(ripple12) );
-	fulladder_1_bit f13( .a( a[13] ), .b( inv_b[13] ), .c_in( ripple12 ), .s( sum[13]), .c_out(ripple13) );
-	fulladder_1_bit f14( .a( a[14] ), .b( inv_b[14] ), .c_in( ripple13 ), .s( sum[14]), .c_out(ripple14) );
-	fulladder_1_bit f15( .a( a[15] ), .b( inv_b[15] ), .c_in( ripple14 ), .s( sum[15]), .c_out(c_out) );
+	wire b_in;
+	assign b_in = 1'b0;
+	full_subtractor f0( .a( a[0] ), .b( b[0] ), .b_in( b_in ), .d( d[0]), .b_out( ripple0 ) );
+	full_subtractor f1( .a( a[1] ), .b( b[1] ), .b_in( ripple0 ), .d( d[1]), .b_out(ripple1) );
+	full_subtractor f2( .a( a[2] ), .b( b[2] ), .b_in( ripple1 ), .d( d[2]), .b_out(ripple2) );
+	full_subtractor f3( .a( a[3] ), .b( b[3] ), .b_in( ripple2 ), .d( d[3]), .b_out(ripple3) );
+	full_subtractor f4( .a( a[4] ), .b( b[4] ), .b_in( ripple3 ), .d( d[4]), .b_out(ripple4) );
+	full_subtractor f5( .a( a[5] ), .b( b[5] ), .b_in( ripple4 ), .d( d[5]), .b_out(ripple5) );
+	full_subtractor f6( .a( a[6] ), .b( b[6] ), .b_in( ripple5 ), .d( d[6]), .b_out(ripple6) );
+	full_subtractor f7( .a( a[7] ), .b( b[7] ), .b_in( ripple6 ), .d( d[7]), .b_out(ripple7) );
+	full_subtractor f8( .a( a[8] ), .b( b[8] ), .b_in( ripple7 ), .d( d[8]), .b_out(ripple8) );
+	full_subtractor f9( .a( a[9] ), .b( b[9] ), .b_in( ripple8 ), .d( d[9]), .b_out(ripple9) );
+	full_subtractor f10( .a( a[10] ), .b( b[10] ), .b_in( ripple9 ), .d( d[10]), .b_out(ripple10) );
+	full_subtractor f11( .a( a[11] ), .b( b[11] ), .b_in( ripple10 ), .d( d[11]), .b_out(ripple11) );
+	full_subtractor f12( .a( a[12] ), .b( b[12] ), .b_in( ripple11 ), .d( d[12]), .b_out(ripple12) );
+	full_subtractor f13( .a( a[13] ), .b( b[13] ), .b_in( ripple12 ), .d( d[13]), .b_out(ripple13) );
+	full_subtractor f14( .a( a[14] ), .b( b[14] ), .b_in( ripple13 ), .d( d[14]), .b_out(ripple14) );
+	full_subtractor f15( .a( a[15] ), .b( b[15] ), .b_in( ripple14 ), .d( d[15]), .b_out(b_out) );
 endmodule
 
 module adder_16_bit_with_overflow(

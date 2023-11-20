@@ -33,7 +33,6 @@ module tb;
 	initial begin
 		#6 for(i=0; i<`TESTVECS; i=i+1)
 		begin #10 {op, i0, i1} = test_vecs[i]; end
-		// $monitor($time, " a = %h, b = %h, op = %b, o = %h", i0, i1, op, o);
 		#100 $finish;
 	end
 

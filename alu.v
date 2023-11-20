@@ -19,7 +19,7 @@ module alu(
 	wire [31:0] mult_result;
 
 	adder_16_bit_with_overflow x1( .a(a), .b(b), .sum(add_result), .c_out(c_out), .overflow(overflow) );
-	sub_16_bit x2( .a(a), .b(b), .sum(sub_result), .c_out(c_out) );
+	sub_16_bit x2( .a(a), .b(b), .d(sub_result), .b_out(c_out) );
 	multi_16_bit x3( .a(a), .b(b), .p(mult_result) );
 	and_16_bit x4( .a(a), .b(b), .op(and_result) );
 	or_16_bit x5( .a(a), .b(b), .op(or_result) );
